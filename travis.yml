@@ -6,8 +6,13 @@ cache:
   directories:
     - "node_modules"
 
-before_install:
-  - cp .env.example .env
+env:
+  - TWITTER_USERNAME=username
+  - TWITTER_API_KEY=here-the-value
+  - TWITTER_API_SECRET=here-the-value
+  - TWITTER_ACCESS_TOKEN=here-the-value
+  - TWITTER_ACCESS_TOKEN_SECRET=here-the-value
+  - DAYS_TO_DUST=3
 
 install:
   - npm install
