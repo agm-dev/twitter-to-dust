@@ -1,5 +1,7 @@
 # Twitter to dust
 
+[![Build Status](https://travis-ci.org/agm-dev/twitter-to-dust.svg?branch=master)](https://travis-ci.org/agm-dev/twitter-to-dust)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/5d019dcf7c224b5a980fdb9b7f79177e)](https://www.codacy.com/manual/agm-dev/twitter-to-dust?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=agm-dev/twitter-to-dust&amp;utm_campaign=Badge_Grade)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/agm-dev/twitter-to-dust)
 ![GitHub All Releases](https://img.shields.io/github/downloads/agm-dev/twitter-to-dust/total)
 ![GitHub](https://img.shields.io/github/license/agm-dev/twitter-to-dust)
