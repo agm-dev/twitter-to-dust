@@ -4,12 +4,46 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "develop": "jest --watch src",
+    "test": "jest",
+    "test:coverage": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Adrián Gonzalo",
+  "license": "MIT",
+  "homepage": "https://github.com/agm-dev/twitter-to-dust",
+  "lint-staged": {
+    "*.js": [
+      "npm run --silent lint:fix",
+      "git add"
+    ],
+    "*.json": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "keywords": [
+    "node",
+    "nodejs",
+    "twitter",
+    "ephemeral"
+  ],
   "dependencies": {
     "dotenv-safe": "^8.2.0",
     "twitter": "^1.7.1"
+  },
+  "devDependencies": {
+    "codacy-coverage": "^3.4.0",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.10.0",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "husky": "^4.2.1",
+    "jest": "^25.1.0",
+    "lint-staged": "^10.0.7",
+    "prettier": "^1.19.1"
   }
 }
