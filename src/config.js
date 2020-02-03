@@ -11,4 +11,5 @@ module.exports = {
   TWITTER_API_SECRET,
   TWITTER_ACCESS_TOKEN,
   TWITTER_ACCESS_TOKEN_SECRET,
+  DAYS_TO_DUST,
 } = process.env;

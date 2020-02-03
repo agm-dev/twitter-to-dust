@@ -1,6 +1,6 @@
-const config = require('./config');
-
 const Twitter = require('twitter');
+const config = require('./config');
+const { log } = require('./utils');
 
 const client = new Twitter({
   consumer_key: config.TWITTER_API_KEY,
@@ -9,31 +9,41 @@ const client = new Twitter({
   access_token_secret: config.TWITTER_ACCESS_TOKEN_SECRET,
 });
 
-const params = {
+const getUserTimeline = () => client.get('statuses/user_timeline', {
   screen_name: config.TWITTER_USERNAME,
   include_rts: true,
   count: 200,
+});
+
+const deleteTweet = tweet => {
+  const id = tweet.id_str;
+  return client.post(`statuses/destroy/${id}`, { id })
 };
 
-function deleteTweet(id) {
-  console.log('BORRANDO TUIT: ', id);
-  client.post(`statuses/destroy/${id}`, { id }, (error, tweets, response) => {
-    if (!error) {
-      console.log('response borrado:', tweets);
-    } else {
-      console.log(error);
-    }
-  });
+const shouldBeDeleted = tweet => {
+  const tweetDate = new Date(tweet.created_at);
+  const now = (new Date()).getTime();
+  const msToExpire = config.DAYS_TO_DUST * 24 * 60 * 60 * 1000;
+
+  const expirationTime = tweetDate.getTime() + msToExpire;
+
+  return now >= expirationTime;
 }
 
-// TODO: use promise version of these movida
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
-  if (!error) {
-    console.log(tweets[0]);
-    const id = tweets[0].id_str;
+const deleteOldTweets = async () => {
+  const tweets = await getUserTimeline();
+  log(`retrieved ${tweets.length} tweets from user timeline`);
+  const promises = tweets
+    .filter(shouldBeDeleted)
+    .map(deleteTweet);
 
-    const ids = tweets.map(item => item.id_str);
-  } else {
-    console.log(error);
-  }
-});
+  // TODO: use allSettled in the future
+  log(`${promises.length} tweets to delete`);
+  await Promise.all(promises);
+  log('end');
+}
+
+module.exports = {
+  deleteOldTweets,
+};
+
