@@ -6,7 +6,7 @@
 ![GitHub All Releases](https://img.shields.io/github/downloads/agm-dev/twitter-to-dust/total)
 ![GitHub](https://img.shields.io/github/license/agm-dev/twitter-to-dust)
 
-Twitter to dust retrieves the last 200 tweets of the user account and removes those older than a given expiration time (in days).
+Twitter to dust retrieves the last 200 tweets of the user account and removes those older than a given expiration time (in days). If a keyword is defined, it will keep the tweets that include that keyword in the text of the tweet.
 
 ## Prerequisites
 
