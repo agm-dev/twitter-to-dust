@@ -5,8 +5,13 @@ jest.mock(
       // eslint-disable-next-line class-methods-use-this
       get() {
         return Promise.resolve([
-          { id_str: "abc", created_at: new Date() },
-          { id_str: "abc", created_at: new Date("2019-02-02") }
+          { id_str: "abc", created_at: new Date(), text: "abc" },
+          { id_str: "abc", created_at: new Date("2019-02-02"), text: "abc" },
+          {
+            id_str: "abc",
+            created_at: new Date("2019-02-02"),
+            text: "abc #keyword def"
+          }
         ]);
       }
 
@@ -16,6 +21,11 @@ jest.mock(
       }
     }
 );
+
+jest.mock("../src/config.js", () => ({
+  DAYS_TO_DUST: 3,
+  DONT_DELETE_KEYWORD: "#keyword"
+}));
 
 const utils = require("../src/utils");
 const twitter = require("../src/twitter");
@@ -36,7 +46,7 @@ describe("Twitter", () => {
     expect(spy).toHaveBeenCalledTimes(3);
     expect(spy).toHaveBeenNthCalledWith(
       1,
-      `retrieved 2 tweets from user timeline`
+      `retrieved 3 tweets from user timeline`
     );
     expect(spy).toHaveBeenNthCalledWith(2, `1 tweets to delete`);
     expect(spy).toHaveBeenNthCalledWith(3, `end`);

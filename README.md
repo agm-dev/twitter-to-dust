@@ -37,6 +37,7 @@ cp .env.example .env
 | TWITTER_ACCESS_TOKEN | The access token from Twitter's dev portal |
 | TWITTER_ACCESS_TOKEN_SECRET | The access token secret from Twitter's dev portal |
 | DAYS_TO_DUST | The expiration time in days |
+| DONT_DELETE_KEYWORD | The string (case sensitive) that avoids removing the tweet if it's included in the text of the tweet. |
 
 ## Tests
 

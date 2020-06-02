@@ -21,6 +21,16 @@ const deleteTweet = tweet => {
   return client.post(`statuses/destroy/${id}`, { id });
 };
 
+const hasDontDeleteKeyword = tweet => {
+  const { text } = tweet;
+  const keyword = config.DONT_DELETE_KEYWORD;
+  if (!text || !keyword) {
+    return false;
+  }
+
+  return text.includes(keyword);
+};
+
 const shouldBeDeleted = tweet => {
   const tweetDate = new Date(tweet.created_at);
   const now = new Date().getTime();
@@ -28,7 +38,7 @@ const shouldBeDeleted = tweet => {
 
   const expirationTime = tweetDate.getTime() + msToExpire;
 
-  return now >= expirationTime;
+  return now >= expirationTime && !hasDontDeleteKeyword(tweet);
 };
 
 const deleteOldTweets = async () => {
